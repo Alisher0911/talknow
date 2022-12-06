@@ -22,7 +22,6 @@ class UserAction extends StatefulWidget {
 
 class _UserActionState extends State<UserAction> {
   late double opacity;
-  bool isScrolledUp = false;
 
   @override
   void initState() {
@@ -38,46 +37,14 @@ class _UserActionState extends State<UserAction> {
   
   @override
   Widget build(BuildContext context) {
-    final h = MediaQuery.of(context).size.height;    
+    final h = MediaQuery.of(context).size.height;
 
     listen() {
-      if (mounted) {
-        if (widget.pageController.position.userScrollDirection == ScrollDirection.reverse) {
-          if (widget.pageController.position.pixels % h <= 350) {
-            setState(() {
-              opacity = max(opacity, (widget.pageController.position.pixels % h) / 350);
-            });
-          } 
-          // if (widget.pageController.position.pixels % h < h - 106) {
-          //   setState(() {
-          //     opacity = max(opacity, widget.pageController.position.pixels % h / (h - 106));
-          //   });
-          // }
-        } else {
-            setState(() {
-              opacity = widget.emoji.initialOpacity;
-            });
-        }
-      }
-    }
-
-    listen1() {
       if(mounted) {
-        print(widget.pageController.position.pixels % h);
         if (widget.pageController.position.pixels % h <= 350) {
           setState(() {
             opacity = max(widget.emoji.initialOpacity, (widget.pageController.position.pixels % h) / 350);
           });
-        } else {
-          if(widget.pageController.position.userScrollDirection == ScrollDirection.forward) {
-            setState(() {
-              isScrolledUp = true;
-            });
-          } else {
-            setState(() {
-              isScrolledUp = false;
-            });
-          }
         }
       }
     }
@@ -87,8 +54,8 @@ class _UserActionState extends State<UserAction> {
       key: Key("${widget.key}"),
       onVisibilityChanged: (info) {
         double visibility = info.visibleFraction;
-        if (visibility >= 0.9 ) {
-          widget.pageController.addListener(listen1);
+        if (visibility >= 0.9) {
+          widget.pageController.addListener(listen);
         }
       },
       child: Container(
@@ -96,13 +63,12 @@ class _UserActionState extends State<UserAction> {
         child: Opacity(
           opacity: opacity,
           child: SvgPicture.asset(
-            isScrolledUp? EmojiPath.rewind.name : widget.emoji.emojiName.name,
+            widget.emoji.emojiName.name,
             height: 150,
             width: 150,
           ),
         ),
       )
-        
     );
   }
 }

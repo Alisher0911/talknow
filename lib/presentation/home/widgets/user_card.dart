@@ -13,7 +13,7 @@ class UserCard extends StatefulWidget {
     super.key,
     required this.user,
     required this.pageController,
-    required this.stream
+    required this.stream,
   });
 
   @override

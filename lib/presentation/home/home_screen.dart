@@ -6,6 +6,7 @@ import 'package:talknow/data/enums/hobbies.dart';
 import 'package:talknow/data/models/emoji_model.dart';
 import 'package:talknow/data/models/user_model.dart';
 import 'package:talknow/presentation/home/widgets/custom_appbar.dart';
+import 'package:talknow/presentation/home/widgets/user_action.dart';
 import 'package:talknow/presentation/home/widgets/user_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -113,7 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     const SizedBox(height: 10),
-
 
                     GestureDetector(
                       onTap: () {
